@@ -10,7 +10,8 @@ This project is part of the Java Basic Challenge from Digital Innovation One. Th
 
 ## UML Diagram
 
-The following UML diagram illustrates the structure of the project:
+The following UML diagram illustrates the base structure of the project.
+Other additional classes and methods were added during the development process.
 
 ![UML Diagram](src/main/resources/UML.drawio.png)
 
