@@ -8,11 +8,8 @@ on:
     types: [created]
   push:
     branches:
-      - main
       - git-worflows
   pull_request:
-    branches:
-      - main
 
 
 jobs:
