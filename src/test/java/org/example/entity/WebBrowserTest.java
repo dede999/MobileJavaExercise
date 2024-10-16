@@ -1,22 +1,35 @@
 package org.example.entity;
 
+import com.github.javafaker.Faker;
 import org.example.records.BrowserTab;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class WebBrowserTest {
     private WebBrowser browser;
+    private Faker faker;
+    private String publicUrl;
+    private String privateUrl;
+
+    public String createUrl() {
+        return faker.internet().url();
+    }
 
     @BeforeEach
     void setUp() {
         browser = new WebBrowser();
-        browser.displayPageOnStart("https://www.example.com", false);
-        browser.displayPageOnEnd("https://www.example.com", true);
-        browser.displayPage("https://www.example.com", false, 1);
+        faker = new Faker(new Locale("pt-BR"));
+        publicUrl = createUrl();
+        privateUrl = createUrl();
+        browser.displayPageOnStart(createUrl(), false);
+        browser.displayPageOnEnd(privateUrl, true);
+        browser.displayPage(publicUrl, false, 1);
     }
 
     @Test
@@ -32,39 +45,43 @@ public class WebBrowserTest {
     @Test
     @DisplayName("Expects a page to be displayed on the first tab")
     void displayPageOnStart() {
-        browser.displayPageOnStart("https://www.example.com", false);
+        String url = createUrl();
+        browser.displayPageOnStart(url, false);
         BrowserTab tab = browser.getTabs().getFirst();
 
-        assertEquals("https://www.example.com", tab.getUrlString());
+        assertEquals(url, tab.getUrlString());
     }
 
     @Test
     @DisplayName("Expects a page to be displayed on the last tab")
     void displayPageOnEnd() {
-        browser.displayPageOnEnd("https://www.example.com", false);
+        String url = createUrl();
+        browser.displayPageOnEnd(url, false);
         BrowserTab tab = browser.getTabs().getLast();
 
-        assertEquals("https://www.example.com", tab.getUrlString());
+        assertEquals(url, tab.getUrlString());
     }
 
     @Test
     @DisplayName("Expects a page to be displayed on the specified tab")
     void displayPage() {
-        browser.displayPage("https://www.example.com", false, 1);
+        String url = createUrl();
+        browser.displayPage(url, false, 1);
         BrowserTab tab = browser.getTabs().get(1);
 
-        assertEquals("https://www.example.com", tab.getUrlString());
+        assertEquals(url, tab.getUrlString());
     }
 
     @Test
     @DisplayName("Expects a private page to be opened")
     void displayPrivatePage() {
+        String url = createUrl();
         int historySize = browser.getHistory().size();
 
-        browser.displayPage("https://www.example.com", true, 0);
+        browser.displayPage(url, true, 0);
         BrowserTab tab = browser.getPrivateTabs().getFirst();
 
-        assertEquals("https://www.example.com", tab.getUrlString());
+        assertEquals(url, tab.getUrlString());
         assertEquals(historySize, browser.getHistory().size());
     }
 
@@ -92,7 +109,7 @@ public class WebBrowserTest {
         BrowserTab tab = browser.closeTab(1, false);
 
         assertEquals(1, browser.getTabs().size());
-        assertEquals("https://www.example.com", tab.getUrlString());
+        assertEquals(publicUrl, tab.getUrlString());
     }
 
     @Test
@@ -101,7 +118,7 @@ public class WebBrowserTest {
         BrowserTab tab = browser.closeTab(0, true);
 
         assertEquals(0, browser.getPrivateTabs().size());
-        assertEquals("https://www.example.com", tab.getUrlString());
+        assertEquals(privateUrl, tab.getUrlString());
     }
 
     @Test
