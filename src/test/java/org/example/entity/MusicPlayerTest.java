@@ -1,6 +1,7 @@
 package org.example.entity;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -14,6 +15,7 @@ class MusicPlayerTest {
     }
 
     @Test
+    @DisplayName("Add a song to the playlist")
     void addSong() {
         assertEquals(1, musicPlayer.addSong("Song 1"));
         assertEquals(2, musicPlayer.addSong("Song 2"));
@@ -21,11 +23,13 @@ class MusicPlayerTest {
     }
 
     @Test
+    @DisplayName("Plying a song in an empty playlist")
     void playSongInEmptyPlaylist() {
         assertEquals("Playlist is empty", musicPlayer.play());
     }
 
     @Test
+    @DisplayName("Playing a song in a playlist with elements")
     void playSongInAPlaylistWithElements() {
         musicPlayer.addSong("Song 1");
 
@@ -35,6 +39,7 @@ class MusicPlayerTest {
     }
 
     @Test
+    @DisplayName("Pausing a song")
     void pause() {
         musicPlayer.addSong("Song 1");
 
@@ -44,6 +49,7 @@ class MusicPlayerTest {
     }
 
     @Test
+    @DisplayName("Skipping a song")
     void next() {
         assertEquals("Playlist is empty", musicPlayer.next());
 
@@ -57,6 +63,7 @@ class MusicPlayerTest {
     }
 
     @Test
+    @DisplayName("Playing the previous song")
     void previous() {
         assertEquals("Playlist is empty", musicPlayer.previous());
 
@@ -70,6 +77,7 @@ class MusicPlayerTest {
     }
 
     @Test
+    @DisplayName("Selecting a song")
     void selectPresentSong() {
         musicPlayer.addSong("Present");
 
@@ -77,16 +85,19 @@ class MusicPlayerTest {
     }
 
     @Test
+    @DisplayName("Selecting an absent song")
     void selectAbsentSong() {
         assertEquals("Playing: Absent", musicPlayer.selectSong("Absent"));
     }
 
     @Test
+    @DisplayName("Getting the current song when paused")
     void getCurrentSongWhenPaused() {
         assertEquals("", musicPlayer.getCurrentSong());
     }
 
     @Test
+    @DisplayName("Getting the current song when playing")
     void getCurrentSongWhenPlaying() {
         musicPlayer.addSong("Song 1");
         musicPlayer.play();
