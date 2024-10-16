@@ -1,25 +1,19 @@
 package org.example.entity;
 
+import lombok.Getter;
+
+@Getter
 public class IPhone {
-    private String model;
-    private String color;
-    private int price;
+    private final String model;
+    private final String color;
+    private final int price;
+    private final MusicPlayer musicPlayer = new MusicPlayer();
+    private final PhoneCentral phone = new PhoneCentral();
+    private final WebBrowser safari = new WebBrowser();
 
     public IPhone(String model, String color, int price) {
         this.model = model;
         this.color = color;
         this.price = price;
-    }
-
-    public String getModel() {
-        return model;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public int getPrice() {
-        return price;
     }
 }

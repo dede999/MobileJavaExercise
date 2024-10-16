@@ -1,12 +1,14 @@
 package org.example.entity;
 
+import lombok.Getter;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class MusicPlayer {
     private final List<String> playList;
     private int currentSongIndex;
-    private String currentSong;
+    private @Getter String currentSong;
 
     public MusicPlayer() {
         this.playList = new ArrayList<>();
@@ -32,9 +34,9 @@ public class MusicPlayer {
         if (!currentSong.isEmpty()) {
             currentSong = "";
             return "Paused";
-        } else {
-            return "Already paused";
         }
+
+        return "Already paused";
     }
 
     public String next() {
@@ -68,9 +70,5 @@ public class MusicPlayer {
         }
 
         return "Playing: " + currentSong;
-    }
-
-    public String getCurrentSong() {
-        return currentSong;
     }
 }
